@@ -58,8 +58,6 @@ echo "-----> Compiling Mono application"
 export PATH="/app/mono/bin:/app/mono/lib:${PATH}"
 export LD_LIBRARY_PATH="/app/mono/lib:${LD_LIBRARY_PATH}"
 
-ln -s /lib/libc.so.6 /app/mono/lib/libc.so
-
 # Add certs to trust store
 cp -r ${LP_DIR}/.config ~/.
 cp -r ${LP_DIR}/.config ${BUILD_DIR}/.
@@ -92,5 +90,8 @@ if [ -d "$BUILD_DIR/_PublishedWebsites/" ]; then
   cp ${NGINX_CACHE_LOCATION}/nginx ${BUILD_DIR}/nginx/.
   cp ${LP_DIR}/nginx/* ${BUILD_DIR}/nginx/.
 fi
+
+echo "-----> Symlinking GLibC"
+ln -s /lib/libc.so.6 /app/mono/lib/libc.so
 
 echo "-----> Build SUCCESS"
